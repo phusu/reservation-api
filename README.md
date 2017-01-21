@@ -37,12 +37,12 @@ In my solution the code is maintained in AWS CodeCommit private Git repository. 
 
 ## Things to do
 - Client (coming up)
-- Modern client with Angular (probably coming up)
+- Modern client with Angular (might be coming up)
 - Roles for users to implement an admin user who could modify all reservations (depends if Cognito groups support will improve)
 - Recurring reservation (need to figure out the best way to implement)
 
 ## Lessons learned
-I could have probably implement all of the server-side functionality in client application, for example accessing the DynamoDB database directly using AWS Javascript SDK. I might still do that if I decide (and have time) to do a completely new client with Angular. However, this implementation of Reservation API serves as a nice example of how to implement a completely serverless solution with AWS resources and how to automatize the build & deployment using CodePipeline.
+I could have probably implemented all of the server-side functionality in client application, for example accessing the DynamoDB database directly using AWS Javascript SDK. I might still do that if I decide (and have time) to do a completely new client with Angular. However, this implementation of Reservation API serves as a nice example of how to implement a completely serverless solution with AWS resources and how to automatize the build & deployment using CodePipeline.
 
 AWS has a nice serverless application model (https://github.com/awslabs/serverless-application-model), my application is based on it with some additions (for example the default and simple way to describe an API doesn't include things I needed such as authorization and CORS support).
 
