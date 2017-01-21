@@ -1,0 +1,20 @@
+version: 0.1
+phases:
+    install:
+        commands:
+        - npm install moment 
+        - npm install --save-dev aws-sdk
+        - npm install -g typescript
+        - npm install --save-dev @types/node 
+    build:
+        commands:
+        - tsc
+    post_build:
+        commands:
+        - aws cloudformation package --template-file cloudFormationTemplate.yaml 
+            --s3-bucket reservation-api --output-template-file NewCloudFormationTemplate.yaml
+
+artifacts:
+    type: zip
+    files:
+        - NewCloudFormationTemplate.yaml

@@ -1,0 +1,134 @@
+# Swagger file describing Reservation-API
+swagger: '2.0'
+basepath: /prod
+info:
+  version: "0.0.0"
+  title: Reservation-API
+schemes:
+- https
+
+securityDefinitions:
+  Reservation-Users:
+    type: apiKey
+    name: Authorization
+    in: header
+    x-amazon-apigateway-authtype: cognito_user_pools
+    x-amazon-apigateway-authorizer:
+      type: cognito_user_pools
+      providerARNs:
+        - <<YOUR_COGNITO_USER_POOL_ARN>>
+
+paths:
+  /:
+    x-amazon-apigateway-any-method:
+      produces:
+      - application/json
+      responses:
+        200:
+          description: Successful response
+          schema:
+            title: ArrayOfReservations
+            type: array
+            items:
+              title: Reservation
+              type: object
+              properties:
+                startTime:
+                  type: string
+                userName:
+                  type: string
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: 200
+        uri: arn:aws:apigateway:<<YOUR_REGION>>:lambda:path/2015-03-31/functions/arn:aws:lambda:<<YOUR_REGION>>:<<YOUR_ACCOUNT_ID>>:function:${stageVariables.LambdaFunctionName}/invocations
+        passthroughBehavior: when_no_match
+        httpMethod: POST
+        type: aws_proxy
+      security:
+      - Reservation-Users: []
+    options:
+      summary: CORS support
+      description: |
+        Enable CORS by returning correct headers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - CORS
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: |
+            {
+              "statusCode" : 200
+            }
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-AmzDate,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods : "'DELETE,GET,OPTIONS,PUT'"
+              method.response.header.Access-Control-Allow-Origin : "'*'"
+            responseTemplates:
+              application/json: "{\"statusCode\": 200}"
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"
+  /{proxy+}:
+    x-amazon-apigateway-any-method:
+      produces:
+      - application/json
+      parameters:
+      - name: proxy
+        in: path
+        required: true
+        type: string
+      responses: {}
+      x-amazon-apigateway-integration:
+        uri: arn:aws:apigateway:<<YOUR_REGION>>:lambda:path/2015-03-31/functions/arn:aws:lambda:<<YOUR_REGION>>:<<YOUR_ACCOUNT_ID>>:function:${stageVariables.LambdaFunctionName}/invocations
+        httpMethod: POST
+        type: aws_proxy
+      security:
+      - Reservation-Users: []
+    options:
+      summary: CORS support
+      description: |
+        Enable CORS by returning correct headers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      tags:
+        - CORS
+      x-amazon-apigateway-integration:
+        type: mock
+        requestTemplates:
+          application/json: "{ \"statusCode\" : 200 }"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers : "'Content-Type,X-AmzDate,Authorization,X-Api-Key'"
+              method.response.header.Access-Control-Allow-Methods : "'DELETE,GET,OPTIONS,PUT'"
+              method.response.header.Access-Control-Allow-Origin : "'*'"
+        passthroughBehavior: when_no_match
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Headers:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Origin:
+              type: "string"  
+      

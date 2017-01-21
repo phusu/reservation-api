@@ -1,0 +1,18 @@
+{
+  "name": "reservation-api",
+  "version": "1.0.0",
+  "description": "Simple reservation API",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pertti Husu",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "0.0.2",
+    "aws-sdk": "^2.7.21"
+  },
+  "dependencies": {
+    "moment": "^2.17.1"
+  }
+}
