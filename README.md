@@ -1,6 +1,6 @@
 # Reservation API
 
-Simple Reservation API implemented with AWS Serverless Framework.
+Simple Reservation API implemented with AWS Serverless Framework. Can be used with [reservation-client](https://github.com/phusu/reservation-client) project.
 
 ## Background and implementation details
 Our band rehearsal space had an old and aging PHP & MySQL based application for reserving rehearsal slots. I decided to implement a completely new solution with modern technologies and utilize AWS Serverless Framework for the application so that it needs no maintaining of servers. In addition, this solution is extremely low-cost.
@@ -36,7 +36,6 @@ In my solution the code is maintained in AWS CodeCommit private Git repository. 
 - Make CodePipeline: http://docs.aws.amazon.com/lambda/latest/dg/automating-deployment.html
 
 ## Things to do
-- Client (coming up)
 - Modern client with Angular (might be coming up)
 - Roles for users to implement an admin user who could modify all reservations (depends if Cognito groups support will improve)
 - Recurring reservation (need to figure out the best way to implement)
