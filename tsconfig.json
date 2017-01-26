@@ -3,7 +3,9 @@
         "outDir": "./built",
         "allowJs": true,
         "target": "es6",
-        "module": "commonjs"
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "strictNullChecks": true
     },
     "include": [
         "./src/*"

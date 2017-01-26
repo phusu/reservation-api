@@ -18,7 +18,7 @@ import { Reservation } from './reservation';
 export class DBClient {
 
     // Our DynamoDB client
-    private dynamodb = null;
+    private dynamodb: AWS.DynamoDB.DocumentClient;
 
     // DynamoDB table name
     private tableName: string;
@@ -29,7 +29,7 @@ export class DBClient {
      */
     constructor(tableName: string) {
         AWS.config.update({
-            region: <<YOUR_AWS_REGION>>
+            region: <<YOUR_AWS_REGION >>
         });
 
         this.dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -120,7 +120,7 @@ export class DBClient {
      */
     getReservations(startTime: string, endTime: string): Promise<Reservation[]> {
         let p = new Promise<Reservation[]>((resolve, reject) => {
-            let result = [];
+            let result: Array<Reservation> = [];
 
             if (startTime && endTime) {
                 let params = {
@@ -137,9 +137,11 @@ export class DBClient {
                 scanPromise.then((response) => {
                     console.log(`Got a response: ${JSON.stringify(response)}`);
 
-                    response.Items.forEach(item => {
-                        result.push(new Reservation(item.timeFrom, item.userName));
-                    });
+                    if (response.Items) {
+                        response.Items.forEach(item => {
+                            result.push(new Reservation(item['timeFrom'], item['userName']));
+                        });
+                    }
 
                     resolve(result);
 

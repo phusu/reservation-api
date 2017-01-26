@@ -24,7 +24,7 @@ let dbclient = new DBClient(process.env.TABLE_NAME);
 /**
  * Lambda handler.
  */
-exports.handler = function (event, context, callback) {
+exports.handler = function (event: any, context: any, callback: any) {
 
     if (event.httpMethod === 'GET') {
         // Figure out startTime & endTime
